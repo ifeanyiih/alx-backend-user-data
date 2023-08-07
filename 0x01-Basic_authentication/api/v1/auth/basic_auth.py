@@ -2,6 +2,8 @@
 """Module contains a BasicAuth class"""
 import base64
 from .auth import Auth
+from models.user import User
+from typing import List, TypeVar
 
 
 class BasicAuth(Auth):
@@ -44,3 +46,20 @@ class BasicAuth(Auth):
         if ':' not in decoded:
             return None, None
         return decoded.split(':')[0], decoded.split(':')[1]
+
+    def user_object_from_credentials(
+                self, user_email: str, user_pwd: str) -> TypeVar('User'):
+        """returns a User instance based on email and password"""
+        if type(user_email) not in [str] or user_email is None:
+            return None
+        if type(user_pwd) not in [str] or user_pwd is None:
+            return None
+        users = User.search({"email": user_email})
+        if len(users) == 0:
+            return None
+        user = None
+        for user_ in users:
+            if user_.is_valid_password(user_pwd):
+                user = user_
+                break
+        return user
