@@ -9,7 +9,14 @@ class Auth:
     """Template for all authentication systems"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Returns False for now"""
-        return False
+        if path is None:
+            return True
+        if len(excluded_paths) == 0 or excluded_paths is None:
+            return True
+        for ex_path in excluded_paths:
+            if ex_path.startswith(path):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Returns None"""
