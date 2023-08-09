@@ -18,10 +18,15 @@ class Auth:
             exists = False
 
             for ex_path in excluded_paths:
-                if ex_path.startswith(path) or\
-                             ex_path.startswith(path_no_slash):
+                if ex_path.endswith('*'):
+                    n_ex = ex_path[:-1]
+                    if path.startswith(n_ex) or path_with_slash.startswith(
+                                                        n_ex):
+                        exists = True
+                        break
+            if not exists:
+                if path in excluded_paths or path_with_slash in excluded_paths:
                     exists = True
-                    break
             if exists:
                 return False
             else:
@@ -31,10 +36,15 @@ class Auth:
             exists = False
 
             for ex_path in excluded_paths:
-                if ex_path.startswith(path) or\
-                            ex_path.startswith(path_with_slash):
+                if ex_path.endswith('*'):
+                    n_ex = ex_path[:-1]
+                    if path.startswith(n_ex) or path_with_slash.startswith(
+                                                        n_ex):
+                        exists = True
+                        break
+            if not exists:
+                if path in excluded_paths or path_with_slash in excluded_paths:
                     exists = True
-                    break
             if exists:
                 return False
             else:
