@@ -15,17 +15,27 @@ class Auth:
             return True
         if path.endswith('/'):
             path_no_slash = path[:-1]
-            path_end_with_asterix = path[:-1] + '*'
-            if path in excluded_paths or path_no_slash in excluded_paths or\
-                    path_end_with_asterix in excluded_paths:
+            exists = False
+
+            for ex_path in excluded_paths:
+                if ex_path.startswith(path) or\
+                             ex_path.startswith(path_no_slash):
+                    exists = True
+                    break
+            if exists:
                 return False
             else:
                 return True
         elif not path.endswith('/'):
             path_with_slash = path + '/'
-            path_end_with_asterix = path + '*'
-            if path in excluded_paths or path_with_slash in excluded_paths or\
-                    path_end_with_asterix in excluded_paths:
+            exists = False
+
+            for ex_path in excluded_paths:
+                if ex_path.startswith(path) or\
+                            ex_path.startswith(path_with_slash):
+                    exists = True
+                    break
+            if exists:
                 return False
             else:
                 return True
