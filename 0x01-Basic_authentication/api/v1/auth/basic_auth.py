@@ -65,12 +65,10 @@ class BasicAuth(Auth):
         users = User.search({"email": user_email})
         if len(users) == 0:
             return None
-        user = None
-        for user_ in users:
-            if user_.is_valid_password(user_pwd):
-                user = user_
-                break
-        return user
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
+        return None
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Overloads Auth and retrieves
