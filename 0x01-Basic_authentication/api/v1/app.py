@@ -27,6 +27,8 @@ elif auth_type == "basic_auth":
 
 @app.before_request
 def before_request_handler() -> None:
+    """Method called before any request
+    is made"""
     excluded: List[str] = ['/api/v1/status/',
                            '/api/v1/unauthorized/', '/api/v1/forbidden/']
     if auth is None:
