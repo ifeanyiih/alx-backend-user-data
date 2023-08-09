@@ -13,8 +13,6 @@ class Auth:
             return True
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
-        if excluded_paths is None:
-            return True
         if path.endswith('/'):
             path_no_slash = path[:-1]
             path_end_with_asterix = path[:-1] + '*'
