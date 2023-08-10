@@ -4,6 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request, g
 from models.user import User
+from models.base import DATA
 from os import getenv
 
 
@@ -20,6 +21,8 @@ def handleLogin() -> str:
     if password == "" or password is None:
         return jsonify({"error": "password missing"}), 400
     user_list = User.search({"email": email})
+    if 'User' not in DATA:
+        return jsonify({"error": "no user found for this email"}), 404
     if len(user_list) == 0:
         return jsonify({"error": "no user found for this email"}), 404
     user = user_list[0]
