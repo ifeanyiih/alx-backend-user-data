@@ -128,4 +128,3 @@ def authenticated_User() -> str:
     me = request.current_user
     g.me = me
     return jsonify(me.to_json()), 200
-    
