@@ -23,6 +23,8 @@ def handleLogin() -> str:
     if not password or not len(password):
         return jsonify({"error": "password missing"}), 400
 
+    if 'User' not in DATA:
+        return jsonify({"error": "no user found for this email"}), 404
     user_list = User.search({"email": email})
     if len(user_list) == 0:
         return jsonify({"error": "no user found for this email"}), 404
