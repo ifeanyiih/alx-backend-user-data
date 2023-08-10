@@ -3,6 +3,7 @@
 That Inherits from Auth Class"""
 from .auth import Auth
 import uuid
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -26,3 +27,10 @@ class SessionAuth(Auth):
         if type(session_id) not in [str]:
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """Returns a user instance based on a cookie value"""
+        cookie_value = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(cookie_value)
+        user = User.get(user_id)
+        return user
