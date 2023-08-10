@@ -33,12 +33,15 @@ def before_request_handler() -> None:
     """Method called before any request
     is made"""
     excluded: List[str] = ['/api/v1/status/',
-                           '/api/v1/unauthorized/', '/api/v1/forbidden/']
+                           '/api/v1/unauthorized/', '/api/v1/forbidden/',
+                           '/api/v1/auth_session/login/']
     if auth is None:
         return
     if not auth.require_auth(request.path, excluded):
         return
     if auth.authorization_header(request) is None:
+        abort(401)
+    if auth.session_cookie(request) is None:
         abort(401)
     current_user = auth.current_user(request)
     if current_user is None:
