@@ -16,23 +16,22 @@ def handleLogin() -> str:
     """
     email = request.form.get('email')
     password = request.form.get('password')
-    if email == "" or email is None:
+
+    if not email or not len(email):
         return jsonify({"error": "email missing"}), 400
-    if password == "" or password is None:
+
+    if not password or not len(password):
         return jsonify({"error": "password missing"}), 400
+
     user_list = User.search({"email": email})
-    if 'User' not in DATA:
-        return jsonify({"error": "no user found for this email"}), 404
     if len(user_list) == 0:
         return jsonify({"error": "no user found for this email"}), 404
-    user = user_list[0]
-    if not user.is_valid_password(password):
-        return jsonify({"error": "wrong passowrd"}), 401
-
-    from api.v1.app import auth
-
-    session = auth.create_session(user.id)
-    session_name = getenv('SESSION_NAME')
-    response = jsonify(user.to_json())
-    response.set_cookie(session_name, session)
-    return response, 200
+    for user in user_list:
+        if user.is_valid_password(password):
+            from api.v1.app import auth
+            session = auth.create_session(user.id)
+            session_name = getenv('SESSION_NAME')
+            response = jsonify(user.to_json())
+            response.set_cookie(session_name, session)
+            return response, 200
+    return jsonify({"error": "wrong passowrd"}), 401
