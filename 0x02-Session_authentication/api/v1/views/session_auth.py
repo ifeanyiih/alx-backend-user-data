@@ -36,4 +36,4 @@ def handleLogin() -> str:
             response = jsonify(user.to_json())
             response.set_cookie(session_name, session)
             return response, 200
-    return jsonify({"error": "wrong passowrd"}), 401
+    return jsonify({"error": "wrong password"}), 401
