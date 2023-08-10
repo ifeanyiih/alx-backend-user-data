@@ -3,6 +3,7 @@
 That Inherits from Auth Class"""
 from .session_auth import SessionAuth
 import uuid
+from os import getenv
 from models.user import User
 from datetime import datetime, timedelta
 
@@ -33,7 +34,7 @@ class SessionExpAuth(SessionAuth):
         """Returns a user_id based on a sessionID"""
         if session_id is None:
             return None
-        session_dictionary = self.user_id_by_session.get(session_id)
+        session_dictionary = self.user_id_by_session_id.get(session_id)
         if not session_dictionary:
             return None
         user_id = session_dictionary.get("user_id")
