@@ -14,3 +14,8 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 - What Cookies are
 - How to send Cookies
 - How to parse Cookies
+
+## New Information
+Since the beginning, all Session IDs are stored in memory. It means, if your application stops, all Session IDs are lost.
+
+For avoid that, you will create a new authentication system, based on Session ID stored in database (for us, it will be in a file, like User)
