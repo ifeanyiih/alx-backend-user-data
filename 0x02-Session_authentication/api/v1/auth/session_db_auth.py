@@ -5,6 +5,7 @@ from .session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 import uuid
 from datetime import datetime, timedelta
+from models.base import DATA
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -23,6 +24,8 @@ class SessionDBAuth(SessionExpAuth):
     def user_id_for_session_id(self, session_id=None) -> str:
         """Returns a user_id based on a session_id"""
         if session_id is None:
+            return None
+        if 'UserSession' not in DATA:
             return None
         user_sessions = UserSession.search({"session_id": session_id})
         if len(user_sessions) == 0:
@@ -46,6 +49,8 @@ class SessionDBAuth(SessionExpAuth):
         if request is None:
             return False
         session_id = self.session_cookie(request)
+        if 'UserSession' not in DATA:
+            return False
         user_sessions = UserSession.search({"session_id": session_id})
         if len(user_sessions) == 0:
             return False
