@@ -52,4 +52,4 @@ def _hash_password(password: str) -> bytes:
 
 def _generate_uuid() -> str:
     """Generates and returns a uuid"""
-    return uuid.uuid4()
+    return str(uuid.uuid4())
