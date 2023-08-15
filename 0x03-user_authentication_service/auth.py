@@ -38,7 +38,7 @@ class Auth:
             if bcrypt.checkpw(encoded_pass, hashed_pass):
                 return True
             else:
-                return False 
+                return False
 
 
 def _hash_password(password: str) -> bytes:
