@@ -43,3 +43,11 @@ class DB:
         session = self._session
         user = session.query(User).filter_by(**kwargs).one()
         return user
+
+    def update_user(self, user_id: int, *args, **kwargs) -> None:
+        """Finds and updates a user in the database"""
+        session = self._session
+        user = self.find_user_by(id=user_id)
+        for key in kwargs.keys():
+            user.key = kwargs[key]
+        session.commit()
