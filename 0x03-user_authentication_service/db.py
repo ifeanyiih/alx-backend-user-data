@@ -49,5 +49,9 @@ class DB:
         session = self._session
         user = self.find_user_by(id=user_id)
         for key in kwargs.keys():
+            try:
+                getattr(user, key)
+            except AttributeError as e:
+                raise ValueError
             user.key = kwargs[key]
         session.commit()
