@@ -8,6 +8,19 @@ import uuid
 from typing import Union
 
 
+def _hash_password(password: str) -> bytes:
+    """Hashes a password and returns the bytes object"""
+    encoded_pass = password.encode('utf-8')
+    salt = bcrypt.gensalt(len(password))
+    hashed_pass = bcrypt.hashpw(encoded_pass, salt)
+    return hashed_pass
+
+
+def _generate_uuid() -> str:
+    """Generates and returns a uuid"""
+    return str(uuid.uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -49,16 +62,3 @@ class Auth:
             return session_id
         except NoResultFound as e:
             return None
-
-
-def _hash_password(password: str) -> bytes:
-    """Hashes a password and returns the bytes object"""
-    encoded_pass = password.encode('utf-8')
-    salt = bcrypt.gensalt(len(password))
-    hashed_pass = bcrypt.hashpw(encoded_pass, salt)
-    return hashed_pass
-
-
-def _generate_uuid() -> str:
-    """Generates and returns a uuid"""
-    return str(uuid.uuid4())
