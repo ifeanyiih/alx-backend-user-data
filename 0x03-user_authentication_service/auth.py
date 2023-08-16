@@ -35,9 +35,7 @@ class Auth:
             return False
         else:
             encoded_pass = password.encode('utf-8')
-            salt = bcrypt.gensalt(len(password))
-            hashed_pass = bcrypt.hashpw(encoded_pass, salt)
-            if bcrypt.checkpw(encoded_pass, hashed_pass):
+            if bcrypt.checkpw(encoded_pass, user.hashed_password):
                 return True
             else:
                 return False
