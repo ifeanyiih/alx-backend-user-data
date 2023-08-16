@@ -53,7 +53,7 @@ class Auth:
             else:
                 return False
 
-    def create_session(self, email: str) -> Union[str, None]:
+    def create_session(self, email: str) -> str:
         """Returns a session_id as a string"""
         try:
             user = self._db.find_user_by(email=email)
