@@ -46,12 +46,11 @@ class Auth:
         """Returns a session_id as a string"""
         try:
             user = self._db.find_user_by(email=email)
-        except NoResultFound as e:
-            return None
-        else:
             session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
             return session_id
+        except NoResultFound as e:
+            return None
 
 
 def _hash_password(password: str) -> bytes:
