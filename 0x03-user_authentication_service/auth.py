@@ -60,7 +60,7 @@ class Auth:
             session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
             return session_id
-        except NoResultFound as e:
+        except NoResultFound:
             return None
 
     def get_user_from_session_id(self, session_id: str) -> User:
@@ -76,7 +76,6 @@ class Auth:
     def destroy_session(self, user_id: int) -> None:
         """Updates the user session ID to NOne"""
         try:
-            user = self._db.find_user_by(id=user_id)
-            self._db.update_user(user.id, id=None)
-        except NoResultFound:
+            self._db.update_user(user_id, id=None)
+        except (NoResultFound, Exception):
             return None
