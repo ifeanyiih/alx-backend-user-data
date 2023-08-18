@@ -48,10 +48,9 @@ class DB:
         """Finds and updates a user in the database"""
         session = self._session
         user = self.find_user_by(id=user_id)
+        columns = User.__table__.columns.keys()
         for key in kwargs.keys():
-            try:
-                getattr(user, key)
-            except AttributeError as e:
+            if key not in columns:
                 raise ValueError
             setattr(user, key, kwargs[key])
         session.add(user)
