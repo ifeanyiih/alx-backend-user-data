@@ -48,7 +48,6 @@ class DB:
         """Finds and updates a user in the database"""
         session = self._session
         user = self.find_user_by(id=user_id)
-        print(dir(user))
         columns = User.__table__.columns.keys()
         for key, value in kwargs.items():
             if key not in columns:
