@@ -54,4 +54,5 @@ class DB:
             except AttributeError as e:
                 raise ValueError
             setattr(user, key, kwargs[key])
+        session.add(user)
         session.commit()
