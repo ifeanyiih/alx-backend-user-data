@@ -53,4 +53,5 @@ class DB:
             if key not in columns:
                 raise ValueError
             setattr(user, key, value)
+        session.add(user)
         session.commit()
